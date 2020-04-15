@@ -1,1 +1,1 @@
-# discord
+# Welcome to Botty
