@@ -6,6 +6,7 @@ const fetch = require("node-fetch");
 const Jikan = require('jikan-node');
 const m_genres = require('./genres');
 const embed = require('./embed');
+const token = require('./token');
 
 const mal = new Jikan();
 
@@ -99,4 +100,4 @@ function handlegenres(msg, cmd, arg)
     }, 4000);
 }
 
-client.login('Njk5Njk0Njc1NjI3NjA2MDY4.XpYHmg.bS9H_7CdK3hmDtPD_12775zJh3c');
+client.login(token.name);
