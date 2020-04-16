@@ -14,3 +14,16 @@ Botty is too basic and nothing is special about it.
 
   	!anime  [title] - informations about the given anime
 	!genres [genre] - a random anime from the given category
+	
+## Usage
+Create a new file under the name token.js with this content:
+
+	var token = "your token"
+	exports.name = token
+	
+and run
+
+	node bot.js
+
+## TODO
+- [] Look up for anime that have many search results
