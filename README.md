@@ -26,4 +26,4 @@ and run
 	node bot.js
 
 ## TODO
-- [] Look up for anime that have many search results
+- [X] Look up for anime that have many search results
