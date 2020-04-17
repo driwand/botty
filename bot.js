@@ -57,23 +57,34 @@ const getgnr = async (id) => {
     return await mal.findGenre("anime", id, 1);
 };
 
+var check = 0
+
 function handleanime(msg, cmd, arg) {
     setTimeout(function () {
         get(cmd, arg)
             .then(function (data) {
-                if (data.results[0].title.toUpperCase() == arg.toUpperCase()) {
+                var res = data.results.slice(0, 5);
+                var i = 0
+                var clicked = 0
+                
+                if (!check)
+                    while (i < 5)
+                    {
+                        if (data.results[i].title.toUpperCase().startsWith(arg.toUpperCase()))
+                            check++;
+                        i++;
+                    }
+                if (check == 1 && data.results[0].title.toUpperCase() == arg.toUpperCase()) {
                     var id = data.results[0].mal_id;
                     console.log(id)
                     getanimebyid(id)
                         .then(function (result) {
                             msg.channel.send(embed.create_embed(result))
                         })
+                    check = 0
                 }
                 else {
-                    var res = data.results.slice(0, 5);
                     var usr_id = msg.author.id;
-                    var clicked = [0, 0, 0, 0, 0]
-
                     msg.channel.send("1 - " + res[0].title + " \n" +
                         "2 - " + res[1].title + " \n" +
                         "3 - " + res[2].title + " \n" +
@@ -92,25 +103,30 @@ function handleanime(msg, cmd, arg) {
                         let emoji = reaction.emoji;
                         if (user.id == usr_id)
                         {
-                            if (!clicked[0] && emoji.name == '1️⃣') {
+                            if (!clicked && emoji.name == '1️⃣') {
                                 handleanime(msg, "anime", res[0].title)
-                                clicked[0] = 1;
+                                check = 1
+                                clicked = 1;
                             }
-                            else if (!clicked[1] && emoji.name == '2️⃣') {
+                            else if (!clicked && emoji.name == '2️⃣') {
                                 handleanime(msg, "anime", res[1].title)
-                                clicked[1] = 1;
+                                check = 1
+                                clicked = 1;
                             }
-                            else if (!clicked[2] && emoji.name == '3️⃣') {
+                            else if (!clicked && emoji.name == '3️⃣') {
                                 handleanime(msg, "anime", res[2].title)
-                                clicked[2] = 1;
+                                check = 1
+                                clicked = 1;
                             }
-                            else if (!clicked[3] && emoji.name == '4️⃣') {
+                            else if (!clicked && emoji.name == '4️⃣') {
                                 handleanime(msg, "anime", res[3].title)
-                                clicked[3] = 1;
+                                check = 1
+                                clicked = 1;
                             }
-                            else if (!clicked[4] && emoji.name == '5️⃣') {
+                            else if (!clicked && emoji.name == '5️⃣') {
                                 handleanime(msg, "anime", res[4].title)
-                                clicked[4] = 1;
+                                check = 1
+                                clicked = 1;
                             }
                         }
                     });
