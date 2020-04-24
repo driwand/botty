@@ -28,3 +28,4 @@ and run
 
 ## TODO
 - [X] Look up for anime that have many search results
+- [] Beautiful result for !season
