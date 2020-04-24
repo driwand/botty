@@ -16,7 +16,7 @@ Botty is too basic and nothing is special about it.
 	!genres [genre] - a random anime from the given category
 	
 ## Usage
-Create a new file under the name token.js with this content:
+Create a new file under the name token.js with the following content:
 
 	var token = "your token"
 	exports.name = token
@@ -26,4 +26,4 @@ and run
 	node bot.js
 
 ## TODO
-- [] Look up for anime that have many search results
+- [X] Look up for anime that have many search results
