@@ -14,7 +14,8 @@ Botty is too basic and nothing is special about it.
 
   	!anime  [title] - informations about the given anime
 	!genres [genre] - a random anime from the given category
-	
+	!season [season] [year] - top 10 anime for specific season (without arguments for the current airing)
+
 ## Usage
 Create a new file under the name token.js with the following content:
 
