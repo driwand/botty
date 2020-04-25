@@ -24,7 +24,7 @@ Create a new file under the name token.js with the following content:
 	
 and run
 
-	node bot.js
+	npm start
 
 ## TODO
 - [X] Look up for anime that have many search results
