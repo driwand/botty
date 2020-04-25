@@ -1,0 +1,26 @@
+{
+  "name": "botty",
+  "version": "1.0.0",
+  "description": "bot that show information about animes",
+  "main": "bot.js",
+  "dependencies": {
+    "canvas": "^2.6.1",
+    "discord.js": "^12.1.1",
+    "jikan-node": "^1.2.0",
+    "locale-compare": "^1.0.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "start": "node bot.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/driwand/botty.git"
+  },
+  "author": "driwand",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/driwand/botty/issues"
+  },
+  "homepage": "https://github.com/driwand/botty#readme"
+}
