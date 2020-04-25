@@ -2,7 +2,6 @@ const fetch = require("node-fetch");
 const Jikan = require('jikan-node');
 const mal = new Jikan();
 
-
 const getanime = async (type, title) => {
     return await mal.search(type, title, "type");
 };
@@ -19,14 +18,14 @@ const getgenre = async (id) => {
 const getseson = async (season, year) => {
     let yr 
     var sn
+
     if (year && season)
     {
         yr = year
         sn = season 
-    }else{
+    } else {
         const dt = new Date()
         yr = dt.getFullYear()
-
         if (dt.getMonth() >= 0 && dt.getMonth() <= 2)
             sn = "winter"
         else if (dt.getMonth() >= 3 && dt.getMonth() <= 5)
@@ -36,7 +35,16 @@ const getseson = async (season, year) => {
         else if (dt.getMonth() >= 9 && dt.getMonth() <= 11)
             sn = "fall"
     }
-    return await mal.findSeason(sn, yr);
+    try {
+        const res = await mal.findSeason(sn, yr);
+        const animes = res.anime;
+        return animes
+          .filter((el) => el.continuing === false)
+          .sort((a, b) => b.score - a.score)
+          .slice(0, 10);
+    } catch (error) {
+        console.log(error)
+    }
 };
 
 module.exports = {

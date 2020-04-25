@@ -80,43 +80,24 @@ async function load(res, check) {
     return (attachment)
 }
 
-function handleseason(msg, arg)
+async function handleseason(msg, arg)
 {
-    if (arg)
-    {
-        let date = arg.split(' ');
-        anime.getseson(date[0], date[1])
-        .then(function (data) {
-            var res = data.anime
-                        .filter(el => el.continuing === false)
-                        .sort((a, b) => b.score - a.score)
-                        .slice(0, 10)
-            res.forEach(async (el,i) => {
-                try{
-                    const att = await load(el, i);
-                    msg.channel.send(att);
-                }catch (error) {
-                    console.log(error)
-                }
-            })
-    })
-    }else {
-        anime.getseson()
-            .then(function (data) {
-                var res = data.anime
-                            .filter(el => el.continuing === false)
-                            .sort((a, b) => b.score - a.score)
-                            .slice(0, 10)
-                res.forEach(async (el,i) => {
-                    try{
-                        const att = await load(el, i);
-                        msg.channel.send(att);
-                    }catch (error) {
-                        console.log(error)
-                    }
-                })
-        })
+    let animes;
+    let date = arg.split(' ')
+    
+    if (arg) {
+        animes = await anime.getseson(date[0], date[1]);
+    } else {
+        animes = await anime.getseson();
     }
+    animes.forEach(async (el, i) => {
+        try {
+            const att = await load(el, i);
+            msg.channel.send(att);
+        } catch (error) {
+            console.log(error);
+        }
+    });
 }
 
 var check = 0
@@ -197,7 +178,7 @@ function handleanime(msg, cmd, arg) {
     }, 4000);
 }
 
-function handlegenres(msg, cmd, arg) {
+function handlegenres(msg, arg) {
     const args = arg.toUpperCase();
 
     let id = m_genres.name[args];
