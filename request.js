@@ -5,7 +5,7 @@ const anime = require('./fetch');
 const Canvas = require('canvas');
 const { Client, MessageAttachment } = require('discord.js');
 
-const client = new Client();
+const client = new Client({ partials: ['MESSAGE', 'CHANNEL', 'REACTION']});
 
 module.exports = {
     handlehelp,
@@ -141,7 +141,16 @@ function handleanime(msg, cmd, arg) {
                             message.react('5️⃣')
                         })
                     
-                    client.on('messageReactionAdd', (reaction, user) => {
+                    client.on('messageReactionAdd', async (reaction, user) => {
+                        if (reaction.partial)
+                        {
+                            try {
+                                await reaction.fetch()
+                            } catch (error) {
+                                console.log("fetching reaction faild!")
+                                return
+                            }
+                        }
                         let emoji = reaction.emoji;
                         if (user.id == usr_id)
                         {
