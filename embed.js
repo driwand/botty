@@ -8,7 +8,6 @@ module.exports = {
 function create_embed(data)
 {
     var list_genres = data.genres;
-    console.log(list_genres)
     const res = list_genres.map(el => el.name).join(', ');
 
     const embed = new Discord.MessageEmbed()
