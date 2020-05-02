@@ -6,6 +6,16 @@ const getanime = async (type, title) => {
     return await mal.search(type, title, "type");
 };
 
+const getepisodes = async (id, page) => {
+    let res
+
+    if (page)
+        res = await fetch(`https://api.jikan.moe/v3/anime/${id}/episodes/${page}`)
+    else
+        res = await fetch(`https://api.jikan.moe/v3/anime/${id}/episodes`)
+    return await res.json()
+};
+
 const getanimebyid = async (id) => {
     const res = await fetch(`https://api.jikan.moe/v3/anime/${id}`)
     return await res.json()
@@ -50,6 +60,7 @@ const getseson = async (season, year) => {
 module.exports = {
     getanime,
     getanimebyid,
+    getepisodes,
     getgenre,
     getseson
 }

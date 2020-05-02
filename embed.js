@@ -5,11 +5,19 @@ module.exports = {
     sad_embed
 }
 
-function create_embed(data)
+function create_embed(data, counteps)
 {
     var list_genres = data.genres;
     const res = list_genres.map(el => el.name).join(', ');
 
+    let episodes
+    if (!counteps)
+        episodes = data.episodes
+    else if (counteps && data.episodes)
+        episodes = `${counteps}/${data.episodes}`
+    else if (counteps && !data.episodes)
+        episodes = `${counteps}/?`
+    
     const embed = new Discord.MessageEmbed()
     .setColor('#353535')
     .setTitle(data.title, data.url)
@@ -19,7 +27,7 @@ function create_embed(data)
     .addFields(
         { name: 'score', value: data.score, inline: true },
         { name: 'members', value: data.members, inline: true },
-        { name: 'episodes', value: data.episodes, inline: true },
+        { name: 'episodes', value: episodes, inline: true },
     )
     .addField('genres', res, true)
     .setImage(data.image_url)

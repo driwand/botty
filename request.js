@@ -93,7 +93,25 @@ function handleanime(msg, cmd, arg) {
                     var id = data.results[0].mal_id;
                     anime.getanimebyid(id)
                         .then(function (result) {
-                            msg.channel.send(embed.create_embed(result))
+                            if (result.airing)
+                            {
+                                let last_ep 
+                                anime.getepisodes(id, 0)
+                                    .then(function (eps) {
+                                        if (eps.episodes_last_page > 1)
+                                        {
+                                            anime.getepisodes(id, eps.episodes_last_page)
+                                                .then(function (last) {
+                                                    last_ep = last.episodes[last.episodes.length - 1].episode_id
+                                                    msg.channel.send(embed.create_embed(result, last_ep))
+                                                })
+                                        } else {
+                                            last_ep = eps.episodes[eps.episodes.length - 1].episode_id
+                                            msg.channel.send(embed.create_embed(result, last_ep))
+                                        }
+                                    })
+                            }else
+                                msg.channel.send(embed.create_embed(result, 0))
                         })
                     check = 0
                 }
