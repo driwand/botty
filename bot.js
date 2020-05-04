@@ -26,7 +26,7 @@ function manageCommand(msg) {
     if (cmd == "help")
         request.handlehelp(msg)
     else if (cmd == "anime")
-        request.handleanime(msg, cmd, arg)
+        request.handleanime(msg, cmd, arg, 0)
     else if (cmd == "genres")
         request.handlegenres(msg, arg)
     else if (cmd == "season")

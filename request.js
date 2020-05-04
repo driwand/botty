@@ -74,23 +74,27 @@ async function load(res, check) {
 
 var check = 0
 
-function handleanime(msg, cmd, arg) {
+function handleanime(msg, cmd, arg, choose) {
+    console.log(check)
     setTimeout(function () {
         anime.getanime(cmd, arg)
             .then(function (data) {
                 var res = data.results.slice(0, 5);
                 var i = 0
                 var clicked = 0
-                
+                let id = 0
+
                 if (!check)
-                    while (i < 5)
-                    {
+                    while (i < 5) {
                         if (data.results[i].title.toUpperCase().startsWith(arg.toUpperCase()))
                             check++;
                         i++;
                     }
-                if (check == 1 && data.results[0].title.toUpperCase() == arg.toUpperCase()) {
-                    var id = data.results[0].mal_id;
+                if (choose)
+                    id = data.results.find(x => x.title === arg).mal_id
+                if (id || ((check == 1) && data.results[0].title.toUpperCase() == arg.toUpperCase())) {
+                    if (id == 0)
+                        id = data.results[0].mal_id;
                     anime.getanimebyid(id)
                         .then(function (result) {
                             if (result.airing)
@@ -145,27 +149,27 @@ function handleanime(msg, cmd, arg) {
                         if (user.id == usr_id)
                         {
                             if (!clicked && emoji.name == '1️⃣') {
-                                handleanime(msg, "anime", res[0].title)
+                                handleanime(msg, "anime", res[0].title, 1)
                                 check = 1
                                 clicked = 1;
                             }
                             else if (!clicked && emoji.name == '2️⃣') {
-                                handleanime(msg, "anime", res[1].title)
+                                handleanime(msg, "anime", res[1].title, 1)
                                 check = 1
                                 clicked = 1;
                             }
                             else if (!clicked && emoji.name == '3️⃣') {
-                                handleanime(msg, "anime", res[2].title)
+                                handleanime(msg, "anime", res[2].title, 1)
                                 check = 1
                                 clicked = 1;
                             }
                             else if (!clicked && emoji.name == '4️⃣') {
-                                handleanime(msg, "anime", res[3].title)
+                                handleanime(msg, "anime", res[3].title, 1)
                                 check = 1
                                 clicked = 1;
                             }
                             else if (!clicked && emoji.name == '5️⃣') {
-                                handleanime(msg, "anime", res[4].title)
+                                handleanime(msg, "anime", res[4].title, 1)
                                 check = 1
                                 clicked = 1;
                             }

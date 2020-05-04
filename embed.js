@@ -32,7 +32,7 @@ function create_embed(data, counteps)
     .addField('genres', res, true)
     .setImage(data.image_url)
     .setTimestamp()
-    .setFooter('anatano botty <3', 'https://ih0.redbubble.net/image.702318777.9332/poster,840x830,f8f8f8-pad,1000x1000,f8f8f8.jpg');
+    .setFooter('anatano botty <3', 'https://vignette.wikia.nocookie.net/shounen-maid/images/6/6e/Chihiro_infobox.png');
     return (embed)
 }
 
