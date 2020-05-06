@@ -73,17 +73,22 @@ async function load(res, check) {
 
 
 var check = 0
+let usr_id
+let titles
+let send
 
 function handleanime(msg, cmd, arg, choose) {
+    send = msg
     console.log(check)
     setTimeout(function () {
         anime.getanime(cmd, arg)
             .then(function (data) {
                 var res = data.results.slice(0, 5);
                 var i = 0
-                var clicked = 0
                 let id = 0
 
+                titles = res.map((tl) => tl.title)
+                
                 if (!check)
                     while (i < 5) {
                         if (data.results[i].title.toUpperCase().startsWith(arg.toUpperCase()))
@@ -120,7 +125,7 @@ function handleanime(msg, cmd, arg, choose) {
                     check = 0
                 }
                 else {
-                    var usr_id = msg.author.id;
+                    usr_id = msg.author.id;
                     msg.channel.send("1 - " + res[0].title + " \n" +
                         "2 - " + res[1].title + " \n" +
                         "3 - " + res[2].title + " \n" +
@@ -134,52 +139,46 @@ function handleanime(msg, cmd, arg, choose) {
                             message.react('4️⃣')
                             message.react('5️⃣')
                         })
-                    
-                    client.on('messageReactionAdd', async (reaction, user) => {
-                        if (reaction.partial)
-                        {
-                            try {
-                                await reaction.fetch()
-                            } catch (error) {
-                                console.log("fetching reaction faild!")
-                                return
-                            }
-                        }
-                        let emoji = reaction.emoji;
-                        if (user.id == usr_id)
-                        {
-                            if (!clicked && emoji.name == '1️⃣') {
-                                handleanime(msg, "anime", res[0].title, 1)
-                                check = 1
-                                clicked = 1;
-                            }
-                            else if (!clicked && emoji.name == '2️⃣') {
-                                handleanime(msg, "anime", res[1].title, 1)
-                                check = 1
-                                clicked = 1;
-                            }
-                            else if (!clicked && emoji.name == '3️⃣') {
-                                handleanime(msg, "anime", res[2].title, 1)
-                                check = 1
-                                clicked = 1;
-                            }
-                            else if (!clicked && emoji.name == '4️⃣') {
-                                handleanime(msg, "anime", res[3].title, 1)
-                                check = 1
-                                clicked = 1;
-                            }
-                            else if (!clicked && emoji.name == '5️⃣') {
-                                handleanime(msg, "anime", res[4].title, 1)
-                                check = 1
-                                clicked = 1;
-                            }
-                        }
-                    });
                 }
             })
             .catch(err => console.log(err));
     }, 4000);
 }
+
+let clicked = 0
+
+client.on('messageReactionAdd', async (reaction, user) => {
+    let emoji = reaction.emoji;
+
+    if (user.id == usr_id)
+    {
+        if (!clicked && emoji.name == '1️⃣') {
+            handleanime(send, "anime", titles[0], 1)
+            check = 1
+            clicked = 1;
+        }
+        else if (!clicked && emoji.name == '2️⃣') {
+            handleanime(send, "anime", titles[1], 1)
+            check = 1
+            clicked = 1;
+        }
+        else if (!clicked && emoji.name == '3️⃣') {
+            handleanime(send, "anime", titles[2], 1)
+            check = 1
+            clicked = 1;
+        }
+        else if (!clicked && emoji.name == '4️⃣') {
+            handleanime(send, "anime", titles[3], 1)
+            check = 1
+            clicked = 1;
+        }
+        else if (!clicked && emoji.name == '5️⃣') {
+            handleanime(send, "anime", titles[4], 1)
+            check = 1
+            clicked = 1;
+        }
+    }
+});
 
 async function handleseason(msg, arg)
 {
